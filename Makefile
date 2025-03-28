@@ -1,23 +1,25 @@
 CXX = g++
 CXXFLAGS = -g -Wall -pedantic -std=c++17
 
-# Add any additional source files here
-SRCS = main.cpp
+# List all source files here
+SRCS = main.cpp Cache.cpp
 OBJS = $(SRCS:.cpp=.o)
 
-# When submitting to Gradescope, submit all .cpp and .h files,
-# as well as README.txt
+# Files to submit to Gradescope (if applicable)
 FILES_TO_SUBMIT = $(shell ls *.cpp *.h README.txt 2> /dev/null)
 
 # Rule for compiling .cpp to .o
 %.o : %.cpp
-	$(CXX) $(CXXFLAGS) -c $*.cpp -o $*.o
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Executable target
+# Default target (when typing "make") builds the executable csim
 csim : $(OBJS)
-	$(CXX) -o $@ $+
+	$(CXX) -o $@ $(OBJS)
 
-# Target to create a solution.zip file you can upload to Gradescope
+# Alias target so "make csim" works too
+all: csim
+
+# Target to create a solution.zip file for Gradescope submission
 .PHONY: solution.zip
 solution.zip :
 	zip -9r $@ $(FILES_TO_SUBMIT)
@@ -29,7 +31,10 @@ depend :
 depend.mak :
 	touch $@
 
+# Clean target removes executable and object files
 clean :
 	rm -f csim *.o
 
-include depend.mak
+# Include dependency file if it exists
+-include depend.mak
+
