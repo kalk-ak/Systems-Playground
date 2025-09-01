@@ -1,5 +1,3 @@
-This assignment was completed entirely by me.
-
 I started by laying out an object-oriented approach that follows principles such as abstraction and encapsulation. To store the cache blocks, I used structs to represent metadata (since actual data is not necessary for this simulation). These structs are stored within each set, and each set uses a hash map  to manage its blocks.
 
 The key in the map is the tag, and the value is a pointer to a slot stored on the heap. This structure provides fast lookups, which becomes especially beneficial when dealing with a large number of sets, such as in a fully associative cache. It is also memory-efficient, as slots are only allocated when needed. Slots are not deleted and reallocated during eviction; instead, their metadata is only updated.
