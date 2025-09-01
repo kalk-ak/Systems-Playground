@@ -1,10 +1,9 @@
-#include <sys/types.h>
-
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -22,7 +21,7 @@
 #define INVALID_OPERATOR 8
 #define INVALID_ADDRESS 9
 
-// Helper function to convert strings to lowercase
+// Helper function to convert a string to lowercase
 std::string to_lower(const std::string& s) {
     std::string result = s;
     std::transform(result.begin(), result.end(), result.begin(),
@@ -36,10 +35,9 @@ bool is_power_of_2(uint32_t n) { return (n & (n - 1)) == 0; }
 int main(int argc, char** argv) {
     // Expect exactly 7 arguments: program name + 6 user inputs
     if (argc != 7) {
-        std::cerr << "Usage: " << argv[0]
-                  << " <num_sets> <num_blocks> <block_size> <hit_type> "
-                     "<miss_type> <eviction>"
-                  << std::endl;
+        std::cerr << "Command Line Argument Format: " << argv[0]
+                  << " <num_sets> <num_blocks> <block_size> "
+                  << "<miss_type> <hit_type>  <eviction>" << std::endl;
         return INVALID_COMMAND_LINE;
     }
 
@@ -52,7 +50,7 @@ int main(int argc, char** argv) {
         block_num = std::stoi(argv[2]);
         block_size = std::stoi(argv[3]);
 
-        // Convert string arguments to lowercase for normalization
+        // Normalize string arguments to lowercase
         miss_type = to_lower(argv[4]);
         hit_type = to_lower(argv[5]);
         eviction = to_lower(argv[6]);
@@ -75,20 +73,14 @@ int main(int argc, char** argv) {
     uint32_t u_block_num = static_cast<uint32_t>(block_num);
     uint32_t u_block_size = static_cast<uint32_t>(block_size);
 
-    // Check if set number and block number are powers of 2
+    // Check if number of sets is a power of 2
     if (!is_power_of_2(u_set_num)) {
         std::cerr << "Error: Number of sets (" << set_num
                   << ") must be a power of 2." << std::endl;
         return INVALID_SET_NUM;
     }
 
-    if (!is_power_of_2(u_block_num)) {
-        std::cerr << "Error: Number of blocks (" << block_num
-                  << ") must be a power of 2." << std::endl;
-        return INVALID_BLOCK_NUM;
-    }
-
-    // Check if block size is valid (≥4 and power of 2)
+    // Check if block size is at least 4 and a power of 2
     if (block_size < 4 || !is_power_of_2(u_block_size)) {
         std::cerr << "Error: Block size (" << block_size
                   << ") must be at least 4 and a power of 2." << std::endl;
@@ -110,6 +102,13 @@ int main(int argc, char** argv) {
         return INVALID_MISS_TYPE;
     }
 
+    if (hit_type == "write-back" && miss_type == "no-write-allocate") {
+        std::cerr
+            << "Error: Can't have write-back and no-write-allocate together."
+            << std::endl;
+        return INVALID_MISS_TYPE;
+    }
+
     // Validate eviction policy
     if (eviction != "lru" && eviction != "fifo") {
         std::cerr << "Error: Eviction policy must be 'lru' or 'fifo'."
@@ -117,24 +116,24 @@ int main(int argc, char** argv) {
         return INVALID_EVICTION;
     }
 
+    // Translate string options to boolean flags
     bool miss_write_type = (miss_type == "write-allocate") ? true : false;
     bool hit_write_type = (hit_type == "write-back") ? true : false;
     bool eviction_type = (eviction == "lru") ? true : false;
 
-    // start the simulation by initializing the Cache
+    // Initialize the cache simulation
     Cache simulation = Cache(u_set_num, u_block_num, u_block_size,
                              miss_write_type, hit_write_type, eviction_type);
 
-    // running the simulation
+    // Begin simulation
     std::cout << "Running the simulation." << std::endl;
 
-    // string to store each input line
-    std::string line;
+    std::string line;  // Input line buffer
 
     uint32_t run = 0;
-    // while user inputs a line
+    // Read lines from standard input
     while (std::getline(std::cin, line)) {
-        // skip if line is empty
+        // Skip empty lines
         if (line.empty()) {
             continue;
         }
@@ -142,8 +141,7 @@ int main(int argc, char** argv) {
         std::istringstream iss(line);
 
         std::string op,
-            hex_address;  // to store the operator and address from standard
-                          // input
+            hex_address;  // Operation type and memory address
         int value;
 
         if (!(iss >> op >> hex_address >> value)) {
@@ -152,7 +150,7 @@ int main(int argc, char** argv) {
             return INVALID_COMMAND_LINE;
         }
 
-        op = to_lower(op);  // accept both upper case and lowercase opeators
+        op = to_lower(op);  // Normalize operator string
 
         if (op.size() != 1 && op != "l" && op != "s") {
             std::cerr << "operator must be of length 1. Either l for load or s "
@@ -161,18 +159,18 @@ int main(int argc, char** argv) {
             return INVALID_OPERATOR;
         }
 
-        // convert the address to an unsigned integer
+        // Convert address from hex string to unsigned int
         uint32_t address;
         try {
             address = std::stoul(hex_address, nullptr, 16);
         } catch (const std::invalid_argument& e) {
-            std::cerr << "Invalid address: address mus be a 32 bit hex "
+            std::cerr << "Invalid address: address must be a 32-bit hex "
                          "representation. "
                       << "Simulation run " << run << std::endl;
             return INVALID_ADDRESS;
         }
 
-        // simulate the load or store in the Cache
+        // Perform the cache operation
         if (op == "l") {
             simulation.load(address);
         } else {
@@ -181,7 +179,7 @@ int main(int argc, char** argv) {
         ++run;
     }
 
-    // output summery to standard output
+    // Output simulation summary
     std::cout << "Total loads: " << simulation.get_loads() << "\n"
               << "Total stores: " << simulation.get_stores() << "\n"
               << "Load hits: " << simulation.get_load_hits() << "\n"

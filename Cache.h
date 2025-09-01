@@ -140,8 +140,9 @@ private:
     const uint32_t num_sets;          // Number of sets in the cache
     const uint32_t num_slots;         // Number of blocks per set
     const uint32_t num_bytes;         // Number of bytes per block
-    const uint32_t writes_per_block;  // The number of times it takes to write
-                                      // block to memory
+    const uint32_t writes_per_block;  // The number of times it takes to
+    //    write
+    // block to memory
 
     const bool
         miss_write_type;  // True: Write-Allocate, False: No-Write-Allocate

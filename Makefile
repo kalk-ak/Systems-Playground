@@ -6,7 +6,7 @@ SRCS = main.cpp Cache.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Files to submit to Gradescope (if applicable)
-FILES_TO_SUBMIT = $(shell ls *.cpp *.h README.txt 2> /dev/null)
+FILES_TO_SUBMIT = $(shell ls *.cpp *.h README.txt Makefile 2> /dev/null)
 
 # Rule for compiling .cpp to .o
 %.o : %.cpp
