@@ -24,7 +24,7 @@ Here are 5 operations applied to the original image, shown side-by-side.
 
 |                       Grayscale                        |                     Rotate 90° CCW                      |                     Gaussian Blur                     |                         Saturate                          |                        Pointillism                         |
 | :----------------------------------------------------: | :-----------------------------------------------------: | :---------------------------------------------------: | :-------------------------------------------------------: | :--------------------------------------------------------: |
-| ![Grayscale Result](path/to/your/grayscale-output.ppm) |    ![Rotate Result](path/to/your/rotate-output.ppm)     |     ![Blur Result](path/to/your/blur-output.ppm)      |   ![Saturate Result](path/to/your/saturate-output.ppm)    | ![Pointillism Result](path/to/your/pointillism-output.ppm) |
+| ![Invert Result](results/kitten-invert.png) |    ![Rotate Result](path/to/your/rotate-output.ppm)     |     ![Blur Result](path/to/your/blur-output.ppm)      |   ![Saturate Result](path/to/your/saturate-output.ppm)    | ![Pointillism Result](path/to/your/pointillism-output.ppm) |
 | **Command:** <br> `./project in.ppm out.ppm grayscale` | **Command:** <br> `./project in.ppm out.ppm rotate-ccw` | **Command:** <br> `./project in.ppm out.ppm blur 3.0` | **Command:** <br> `./project in.ppm out.ppm saturate 1.8` |  **Command:** <br> `./project in.ppm out.ppm pointilism`   |
 
 ---
