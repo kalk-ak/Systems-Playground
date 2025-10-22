@@ -1,4 +1,4 @@
-# C Parallel Quicksort with mmap() and fork()
+# C++ Parallel Quicksort with mmap() and fork()
 
 ## Project Summary
 
