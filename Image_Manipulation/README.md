@@ -16,7 +16,7 @@ Below are examples of the transformations this program can perform.
 
 (This is the image used as the input for all operations below)
 
-![Original Image](./data/kitten.ppm)
+![Original Image](./data/kitten.png)
 
 ### Supported Transformations
 
