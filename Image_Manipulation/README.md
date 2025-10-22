@@ -24,7 +24,7 @@ Here are 5 operations applied to the original image, shown side-by-side.
 
 |                       Invert                        |                      Zoom-Out                      |                     Gaussian Blur                     |                         Binarize                          |                        Pointillism                         |
 | :----------------------------------------------------: | :-----------------------------------------------------: | :---------------------------------------------------: | :-------------------------------------------------------: | :--------------------------------------------------------: |
-| ![Invert Result](results/kitten-invert.png) |    ![Zoom-Out Result](results/kitten-zo.png)     |     ![Blur Result](results/kitten-blur2.png)      |   ![Binarize Result](results/kitten-bin.png)    | ![Pointillism Result](path/to/your/pointillism-output.ppm) |
+| ![Invert Result](results/kitten-invert.png) |    ![Zoom-Out Result](results/kitten-zo.png)     |     ![Blur Result](results/kitten-blur2.png)      |   ![Binarize Result](results/kitten-bin.png)    | ![Pointillism Result](results/kitten-point.png) |
 | **Command:** <br> `./project in.ppm out.ppm grayscale` | **Command:** <br> `./project in.ppm out.ppm rotate-ccw` | **Command:** <br> `./project in.ppm out.ppm blur 3.0` | **Command:** <br> `./project in.ppm out.ppm saturate 1.8` |  **Command:** <br> `./project in.ppm out.ppm pointilism`   |
 
 ---
