@@ -1,52 +1,96 @@
-I started by laying out an object-oriented approach that follows principles such as abstraction and encapsulation. To store the cache blocks, I used structs to represent metadata (since actual data is not necessary for this simulation). These structs are stored within each set, and each set uses a hash map  to manage its blocks.
+# C/C++ Command-Line Cache Simulator
 
-The key in the map is the tag, and the value is a pointer to a slot stored on the heap. This structure provides fast lookups, which becomes especially beneficial when dealing with a large number of sets, such as in a fully associative cache. It is also memory-efficient, as slots are only allocated when needed. Slots are not deleted and reallocated during eviction; instead, their metadata is only updated.
+## Project Summary
 
-I chose to use heap allocation for the slots to avoid stack overflows in scenarios with a large number of blocks. The heap allows for more scalable memory usage in such cases.
+This project is a configurable, event-driven cache simulator written in C/C++. It is designed to analyze the performance of different cache configurations by processing memory access traces.
 
-Time in the simulation is managed using an unsigned integer that increments with each load and store operation. This timestamp supports both the FIFO and LRU replacement policies, both of which are implemented in the simulator.
+The simulator is built from scratch in C/C++ and compiles with `make`. It reads a trace file from standard input, where each line represents a memory operation (`l` for load, `s` for store) and a memory address. Based on user-defined parameters for the cache's geometry and policies, it simulates the cache's behavior and reports a detailed summary of its performance, including hit/miss rates and total cycles.
 
-The load and store methods require only the address as input. They internally compute the tag, offset, and index using helper functions. The index identifies the set in the main cache array, the tag is used to search for the block within that set, and the offset—although not critical for this simulation—can be useful to determine word alignment or sub-block access.
+---
 
+## Technologies Used
 
+* **Programming Language:** C / C++ (C++ Standard Library or C Standard Library only)
+* **Build System:** `make` / `Makefile`
+* **Compiler:** `gcc` / `g++` with `-Wall -Wextra -pedantic` flags
+* **Development Tools:** `Valgrind` (for memory-safe development), `gdb`
 
+---
 
-Best Cache Report:
+## Simulated Features
 
-I let the simulator run multiple times with different cache systems. I tested fully associative caches with a set of 1 and the set having 206 number of blocks, as well as set-associative caches with 10 and 100 sets. I also tested direct maped cache configurations that had as many as (1024 / 4) blocks with a block size of 4 bytes. After comparing hit rates and cycle counts across these different setups, I found the following trends. The storeage size that i used is 1kb (1024 bytes) of storeage for each simulation runs.
+This simulator can be configured to model a wide variety of cache architectures:
 
+* **Cache Geometries:** Simulates any cache with power-of-2 sizes for:
+    * Number of sets
+    * Number of blocks per set (associativity)
+    * Block size (in bytes)
+* **Write Policies:**
+    * `write-through` (writes go to both cache and memory)
+    * `write-back` (writes go to cache; memory is updated on eviction)
+* **Write Allocation Policies:**
+    * `write-allocate` (on a write miss, the block is loaded into the cache first)
+    * `no-write-allocate` (on a write miss, only memory is written)
+* **Eviction Policies:**
+    * `lru` (Least Recently Used)
+    * `fifo` (First-In, First-Out)
+* **Performance Metrics:**
+    * Tracks all loads, stores, hits, and misses.
+    * Calculates total cycles based on cache/memory access penalties.
 
---- LRU vs FIFO
+---
 
-The experiments consistently showed that LRU outperforms FIFO across most trace files. With LRU, frequently accessed blocks are retained longer, leading to fewer cache misses. This advantage is especially clear as the number of operations increases in the simulator. The LRU and FIFO are only effective if the cache is being utilized, meaning the simulator isn't just updating the memory. A reason why the FIFO might perform worse than the LRU is becaue it is just evicting blocks by their order they were added and this doesn't necessarily tell how much frequently that block of data is being accessed. 
+## How to Use
 
----Write Back vs Write Through
+### 1. Compile
 
-The cycle counts reported in the simulator reveal that write-back caching is superior to write-through, especially for write-intensive tasks. Write-back defers costly memory writes until eviction (costing only 1 memory cost ) by keeping updates in the cache. This results in a significant reduction in total cycles on the write.trace compared to the immediate memory writes required by write-through.
+Navigate to the project directory and use `make` to compile the program. This will create the executable `csim`.
 
+```bash
+make
+```
 
---- Write-Allocate vs No Write Allocate
+### 2. Run
 
-My tests also showed that write-allocate performs better than no write allocate. With write-allocate, store misses result in blocks being loaded into the cache, which benefits both future reads and writes. This strategy is particularly effective in mixed workloads like swim.trace and the gcc.trace, where caching store misses helps balance both read and write operations.
+The program is run from the command line with 6 arguments and reads a trace file from standard input using a redirect (`<`).
 
+**Syntax:**
 
---- Combining Write-Allocate with Write-Back
+```bash
+./csim <num-sets> <num-blocks> <block-size> <write-allocate> <write-through> <eviction-policy> < <path/to/trace.txt>
+```
 
-The combination of write-allocate and write-back minimizes expensive memory writes while maintaining high cache hit rates. This configuration significantly delivered lower clock cycle counts across all traces. Direct memory writes, which cost 100 cycles per operation, were significantly reduced, making this combo the best overall in scenarios with heavy writes.
+**Argument Definitions:**
 
+* `<num-sets>`: The number of sets (e.g., `256`)
+* `<num-blocks>`: The number of blocks per set (associativity, e.g., `4`)
+* `<block-size>`: The size of each block in bytes (e.g., `16`)
+* `<write-allocate>`: `write-allocate` or `no-write-allocate`
+* `<write-through>`: `write-through` or `write-back`
+* `<eviction-policy>`: `lru` or `fifo`
 
---- Write-Through and No Write Allocate vs. Other Combinations
+---
 
-On the other hand, setups using write-through with no write allocate showed the worst performance, with the highest cycle counts. Frequent direct writes to memory severely impact overall performance, especially in the write.trace tests, where write latency is critical.
+## Example Usage & Output
 
+Here is an example of running the simulator with a 4-way set-associative cache and a `write-back` policy, using the `gcc.trace` file.
 
-NOTE: 
-These observations become more evident as the operations in the cache increases like in gcc.trace
+### Example Command
 
+```bash
+./csim 256 4 16 write-allocate write-back lru < traces/gcc.trace
+```
 
+### Example Output (Placeholder)
 
---- Read vs. Write Performance
+The program will process the entire trace file and print the following 7-line summary to the console. This is the "placeholder" for what your program will produce.
 
-    Read Performance: In read-intensive scenarios, like those in read.trace, configurations that maximize hit rates (using LRU eviction and write-allocate) perform best. The lower cycle counts reflect minimal delays since data is already cached.
-
-    Write Performance: For write-heavy traces such as write.trace, reducing the number of direct memory writes is key. The write-back strategy performs better here, as it delays writes until absolutely necessary, dramatically lowering cycle counts compared to write-through methods.
+```
+Total loads: [COUNT]
+Total stores: [COUNT]
+Load hits: [COUNT]
+Load misses: [COUNT]
+Store hits: [COUNT]
+Store misses: [COUNT]
+Total cycles: [COUNT]
+```
