@@ -85,7 +85,7 @@ echo $?
 
 This section contains the performance analysis from sorting a 16M test file with various parallel thresholds.
 
-**Test System:** `[Placeholder: e.g., ugradX.cs.jhu.edu]`
+**Test System:** `Unix Sysytem`
 **Data File Size:** 16M (16,777,216 bytes)
 **Total 64-bit Integers:** 2,097,152
 
