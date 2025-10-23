@@ -93,7 +93,7 @@ This section contains the performance analysis from sorting a 16M test file with
 
 | Parallel Threshold (Elements) | Real Time (s)     |
 | :---------------------------- | :---------------- |
-| `2097152` (Sequential)        | `[User fills in]` |
+| `2097152` (Sequential)        | `[Userfills in]`  |
 | `1048576`                     | `[User fills in]` |
 | `524288`                      | `[User fills in]` |
 | `262144`                      | `[User fills in]` |
