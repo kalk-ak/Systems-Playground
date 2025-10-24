@@ -30,7 +30,7 @@ The core of this project is its objec oriented architecture. All logic is built 
 3.  **Dynamic Dispatch**: The `Board` class doesn't know (or care) what _kind_ of piece is at a given square. It simply holds a grid of `Piece*` (piece pointers). When checking a move, it just calls `the_piece->legal_move_shape(...)`. The C++ runtime automatically figures out which version to run (e.g., the `King`'s version or the `Rook`'s version).
 
 ### Example Game Play
-![Example Game Play](example-game/ex.png)
+![Example Game Play](example_game/ex.png)
 
 
 ---
