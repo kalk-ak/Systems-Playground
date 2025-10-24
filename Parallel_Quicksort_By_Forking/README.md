@@ -93,7 +93,7 @@ This section contains the performance analysis from sorting a 16M test file with
 
 | Parallel Threshold (Elements) | Sequential Sort (s)     | Parallel Sort (s) |
 | :---------------------------- | :---------------- |:-----------------------|
-| `2097152` (Sequential)        | `0m0.586s`  | `0m0.006s` |
+| `2097152`      | `0m0.586s`  | `0m0.006s` |
 | `1048576`                     | `0m0.626s` | `0m0.013s` |
 | `524288`                      | `0m0.606s` | `0m0.032s` |
 | `262144`                      | `0m0.627s` | `0m0.021s` | 
