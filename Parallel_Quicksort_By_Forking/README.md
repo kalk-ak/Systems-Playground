@@ -91,19 +91,19 @@ This section contains the performance analysis from sorting a 16M test file with
 
 ### Timing Results (Real Time)
 
-| Parallel Threshold (Elements) | Real Time (s)     |
-| :---------------------------- | :---------------- |
-| `2097152` (Sequential)        | `[Userfills in]`  |
-| `1048576`                     | `[User fills in]` |
-| `524288`                      | `[User fills in]` |
-| `262144`                      | `[User fills in]` |
-| `131072`                      | `[User fills in]` |
-| `65536`                       | `[User fills in]` |
-| `32768`                       | `[User fills in]` |
-| `16384`                       | `[User fills in]` |
+| Parallel Threshold (Elements) | Sequential Sort (s)     | Parallel Sort (s) |
+| :---------------------------- | :---------------- |:-----------------------|
+| `2097152` (Sequential)        | `0m0.586s`  | `0m0.006s` |
+| `1048576`                     | `0m0.626s` | `0m0.013s` |
+| `524288`                      | `0m0.606s` | `0m0.032s` |
+| `262144`                      | `0m0.627s` | `0m0.021s` | 
+| `131072`                      | `0m0.690s` | `0m0.050s` |
+| `65536`                       | `0m0.697s` | `0m0.037s` |
+| `32768`                       | `0m0.718s` | `0m0.054s` |
+| `16384`                       | `0m0.799s` | `0m0.099s` |
 
 ### Analysis
-
+1
 `[Placeholder: Write your analysis here. Explain the trend you see in the`real`time as the threshold decreases. Why does the performance improve? Does it eventually stop improving or get worse? Why would that be? Consider the number of processes created, the overhead of`fork()`, and the number of available CPU cores.]`
 
 ---
