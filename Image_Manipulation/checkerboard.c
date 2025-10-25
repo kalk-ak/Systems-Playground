@@ -1,21 +1,4 @@
-/*****************************************************************************
- * Midterm Project - A program to generate a checkboard image in a PPM file
- * Note: for naming convention, we try to follow Google C++ style guide:
- *       https://google.github.io/styleguide/cppguide.html
- * It is not compulsory, but you are highly encouraged to follow a convention.
- *
- * Summary: This file implements a program to generate a checkboard image.
- *          It takes four optional arguments:
- *            The output filename (default: checkboard.ppm)
- *            The number of checkerboard columns (default: 7)
- *            The number of checkerboard rows (default: 5)
- *            The size of a checkerboard square (default: 50 pixels)
- *          The program will return 0 if the checkboard image is generated.
- *          Otherwise, it will return 1 for wrong usage, 2 for other errors.
- *
- * Note: this is for your reference.  Your shouldn't need to modify it.
- *****************************************************************************/
-*/
+
 #include "ppm_io.h" // PPM I/O header
 #include <stdlib.h> // c functions: atio
 
