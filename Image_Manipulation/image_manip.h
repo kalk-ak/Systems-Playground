@@ -9,18 +9,11 @@
 // macro to square a number
 #define sq(X) ((X) * (X))
 
-///////////////////////////////
-// Provided helper functions //
-///////////////////////////////
-
 /* Convert a RGB pixel to a single grayscale intensity;
  * uses NTSC standard conversion
  */
 unsigned char pixel_to_gray(Pixel p);
 
-//////////////////////////////////
-// Image manipulation functions //
-//////////////////////////////////
 
 //______invert______
 /* invert the intensity of each channel
