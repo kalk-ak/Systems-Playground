@@ -5,11 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-////////////////////////////////////////
-// Definitions of the functions       //
-// declared in image_manip.h go here! //
-////////////////////////////////////////
-
 /* Convert a RGB pixel to a single grayscale intensity;
  * uses NTSC standard conversion
  */
