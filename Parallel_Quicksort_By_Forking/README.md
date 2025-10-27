@@ -102,9 +102,6 @@ This section contains the performance analysis from sorting a 16M test file with
 | `32768`                       | `0m0.718s` | `0m0.054s` |
 | `16384`                       | `0m0.799s` | `0m0.099s` |
 
-### Analysis
-1
-`[Placeholder: Write your analysis here. Explain the trend you see in the`real`time as the threshold decreases. Why does the performance improve? Does it eventually stop improving or get worse? Why would that be? Consider the number of processes created, the overhead of`fork()`, and the number of available CPU cores.]`
 
 ---
 
