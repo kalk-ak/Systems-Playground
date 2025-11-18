@@ -22,7 +22,7 @@ Below are examples of the transformations this program can perform.
 
 Here are 5 operations applied to the original image, shown side-by-side.
 
-|                       Invert                        |                      Zoom-Out                      |                     Gaussian Blur \t (Uses Convolution)                     |                         Binarize                          |                        Pointillism                         |
+|                       Invert                        |                      Zoom-Out                      |                     Gaussian Blur        (Uses Convolution)                     |                         Binarize                          |                        Pointillism                         |
 | :----------------------------------------------------: | :-----------------------------------------------------: | :---------------------------------------------------: | :-------------------------------------------------------: | :--------------------------------------------------------: |
 | ![Invert Result](results/kitten-invert.png) |    ![Zoom-Out Result](results/kitten-zo.png)     |     ![Blur Result](results/kitten-blur2.png)      |   ![Binarize Result](results/kitten-bin.png)    | ![Pointillism Result](results/kitten-zo-5.png) |
 | **Command:** <br> `./project in.ppm out.ppm grayscale` | **Command:** <br> `./project in.ppm out.ppm rotate-ccw` | **Command:** <br> `./project in.ppm out.ppm blur 3.0` | **Command:** <br> `./project in.ppm out.ppm saturate 1.8` |  **Command:** <br> `./project in.ppm out.ppm pointilism`   |
