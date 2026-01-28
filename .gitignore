@@ -2,3 +2,4 @@
 *.o
 /depend.mak
 /solution.zip
+Image_Rotation/*
