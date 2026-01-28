@@ -1,4 +1,4 @@
 /csim
-/*.o
+*.o
 /depend.mak
 /solution.zip
